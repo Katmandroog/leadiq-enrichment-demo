@@ -1,29 +1,29 @@
-document.getElementById('firstName').addEventListener('input', debounce(handleInput, 500));
-document.getElementById('lastName').addEventListener('input', debounce(handleInput, 500));
-document.getElementById('email').addEventListener('input', debounce(handleInput, 500));
+document.getElementById('enrichButton').addEventListener('click', function() {
+    console.log("Enrich Data button clicked");
 
-function handleInput() {
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    
-    if (firstName && lastName && email) {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    // Ensure all fields are filled before making the API call
+    if (firstName && lastName && validateEmail(email)) {
         fetchLeadIQData(firstName, lastName, email);
+    } else {
+        alert("Please fill out all fields with valid data before submitting.");
     }
-}
+});
 
-function debounce(func, wait) {
-    let timeout;
-    return function(...args) {
-        const context = this;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
-    };
+// Helper function to validate email
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
 }
 
 function fetchLeadIQData(firstName, lastName, email) {
-    const apiUrl = 'https://api.leadiq.com/graphql'; // LeadIQ GraphQL endpoint
-    const apiKey = 'aG1fcHJvZF9iYzRmZjk4YjQ2YjFmN2ZmMmUzNmEzMWUxOTZiOTczNTk3NWNmYTUyMzRiODcyMjczOTRkYTlmN2JiMjVhYzNj'; // Replace with your actual Secret Base64 API key
+    const apiUrl = 'https://api.leadiq.com/graphql';
+    const apiKey = 'aG1fcHJvZF9iYzRmZjk4YjQ2YjFmN2ZmMmUzNmEzMWUxOTZiOTczNTk3NWNmYTUyMzRiODcyMjczOTRkYTlmN2JiMjVhYzNj';
+
+    console.log("Making API call to LeadIQ with:", firstName, lastName, email);
 
     const query = `
         query SearchPeople($input: SearchPeopleInput!) {
@@ -74,8 +74,6 @@ function fetchLeadIQData(firstName, lastName, email) {
         }
     };
 
-    console.log("Sending request to LeadIQ API with variables:", JSON.stringify(variables));
-
     fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -93,11 +91,11 @@ function fetchLeadIQData(firstName, lastName, email) {
         return response.json();
     })
     .then(data => {
-        console.log("Received response from LeadIQ API:", data);
+        console.log("API response received:", data);
         displayResults(data);
     })
     .catch(error => {
-        console.error('Error:', error);
+        console.error('Error fetching data:', error);
         document.querySelector('.results').innerHTML = `<p style="color:red;">Error fetching data: ${error.message}</p>`;
     });
 }
@@ -110,9 +108,6 @@ function displayResults(data) {
         const email = position.emails && position.emails.length > 0 ? position.emails[0].value : 'N/A';
         const phone = position.phones && position.phones.length > 0 ? position.phones[0].value : 'N/A';
         const profile = person.profiles && person.profiles.length > 0 ? person.profiles[0].url : 'N/A';
-        const location = person.location ? `${person.location.city || ''}, ${person.location.state || ''}, ${person.location.country || ''}, ${person.location.postalCode || ''}`.trim() : 'N/A';
-        const education = person.education && person.education.length > 0 ? `${person.education[0].school || ''}, ${person.education[0].degree || ''}, ${person.education[0].fieldOfStudy || ''}`.trim() : 'N/A';
-        const experience = person.workExperience && person.workExperience.length > 0 ? `${person.workExperience[0].title || ''} at ${person.workExperience[0].company || ''}`.trim() : 'N/A';
 
         if (document.getElementById('title')) {
             document.getElementById('title').value = position.title || 'N/A';
@@ -129,26 +124,8 @@ function displayResults(data) {
         if (document.getElementById('profile')) {
             document.getElementById('profile').value = profile;
         }
-        if (document.getElementById('location')) {
-            document.getElementById('location').value = location;
-        }
-        if (document.getElementById('education')) {
-            document.getElementById('education').value = education;
-        }
-        if (document.getElementById('experience')) {
-            document.getElementById('experience').value = experience;
-        }
     } else {
-        // If no results are found
-        document.getElementById('title').value = 'No match found';
-        document.getElementById('company').value = 'No match found';
-        document.getElementById('resultEmail').value = 'No match found';
-        document.getElementById('phone').value = 'No match found';
-        document.getElementById('profile').value = 'No match found';
-        document.getElementById('location').value = 'No match found';
-        document.getElementById('education').value = 'No match found';
-        document.getElementById('experience').value = 'No match found';
+        console.warn("No results found.");
+        document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
     }
 }
-
-

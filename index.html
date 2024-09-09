@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeadIQ Enrichment Demo</title>
     <style>
-        /* General page styles */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #F4FBFC; /* Light background */
+            background-color: #F4FBFC;
             margin: 0;
             display: flex;
             justify-content: center;
@@ -16,7 +15,6 @@
             height: 100vh;
         }
 
-        /* Container for the form */
         .container {
             background-color: white;
             padding: 30px;
@@ -26,7 +24,6 @@
             text-align: center;
         }
 
-        /* Title styling */
         h1 {
             font-family: 'Vusemod', sans-serif;
             font-size: 24px;
@@ -34,7 +31,6 @@
             margin-bottom: 20px;
         }
 
-        /* Labels and Inputs */
         label {
             font-weight: bold;
             text-align: left;
@@ -59,7 +55,6 @@
             border-color: #00D586;
         }
 
-        /* Submit button */
         button {
             width: 100%;
             padding: 12px 20px;
@@ -76,7 +71,6 @@
             background-color: #02B389;
         }
 
-        /* Styling for the result fields */
         .results input {
             background-color: #F4FBFC;
             border: 1px solid #DAE2E3;
@@ -97,18 +91,19 @@
 
     <div class="container">
         <h1>LeadIQ Enrichment Demo</h1>
-        <form id="enrichmentForm">
+        <div id="enrichmentForm">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" autocomplete="off" required>
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+            <input type="text" id="firstName" name="firstName" autocomplete="off" required>
             
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+            <input type="text" id="lastName" name="lastName" autocomplete="off" required>
             
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email" autocomplete="email" required>
+
             
-            <button type="submit">Enrich Data</button>
-        </form>
+            <button id="enrichButton" type="button">Enrich Data</button>
+        </div>
 
         <div class="results">
             <label for="title">Title:</label>
