@@ -48,13 +48,17 @@ function fetchLeadIQData(firstName, lastName, email) {
                             linkedinUrl
                         }
                     }
+                    personalEmails {
+                        value
+                    }
+                    personalPhones {
+                        value
+                    }
                     profiles {
                         network
                         id
                         username
                         url
-                        status
-                        updatedAt
                     }
                     education {
                         name
@@ -105,27 +109,29 @@ function displayResults(data) {
     if (data && data.data && data.data.searchPeople && data.data.searchPeople.results.length > 0) {
         const person = data.data.searchPeople.results[0];
         const position = person.currentPositions && person.currentPositions.length > 0 ? person.currentPositions[0] : {};
-        const email = position.emails && position.emails.length > 0 ? position.emails[0].value : 'N/A';
-        const phone = position.phones && position.phones.length > 0 ? position.phones[0].value : 'N/A';
-        const profile = person.profiles && person.profiles.length > 0 ? person.profiles[0].url : 'N/A';
 
-        if (document.getElementById('title')) {
-            document.getElementById('title').value = position.title || 'N/A';
-        }
-        if (document.getElementById('company')) {
-            document.getElementById('company').value = position.companyInfo && position.companyInfo.name ? position.companyInfo.name : 'N/A';
-        }
-        if (document.getElementById('resultEmail')) {
-            document.getElementById('resultEmail').value = email;
-        }
-        if (document.getElementById('phone')) {
-            document.getElementById('phone').value = phone;
-        }
-        if (document.getElementById('profile')) {
-            document.getElementById('profile').value = profile;
-        }
+        // Check for work or personal emails and phones
+        const email = position.emails && position.emails.length > 0 ? position.emails[0].value : 
+                      (person.personalEmails && person.personalEmails.length > 0 ? person.personalEmails[0].value : 'N/A');
+        
+        const phone = position.phones && position.phones.length > 0 ? position.phones[0].value : 
+                      (person.personalPhones && person.personalPhones.length > 0 ? person.personalPhones[0].value : 'N/A');
+        
+        const profile = person.profiles && person.profiles.length > 0 ? person.profiles[0].url : 'N/A';
+        const location = person.location ? `${person.location.city || ''}, ${person.location.state || ''}, ${person.location.country || ''}`.trim() : 'N/A';
+        const education = person.education && person.education.length > 0 ? `${person.education[0].name || ''}, ${person.education[0].degrees || ''}`.trim() : 'N/A';
+
+        // Update the form with received data
+        document.getElementById('title').value = position.title || 'N/A';
+        document.getElementById('company').value = position.companyInfo?.name || 'N/A';
+        document.getElementById('resultEmail').value = email;
+        document.getElementById('phone').value = phone;
+        document.getElementById('profile').value = profile;
+        document.getElementById('location').value = location;
+        document.getElementById('education').value = education;
+
     } else {
-        console.warn("No results found.");
+        console.warn("No results found or missing data in response.");
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
     }
 }
