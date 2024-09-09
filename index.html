@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadIQ Enrichment Demo</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F4FBFC; /* Light background */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container for the form */
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 380px;
+            text-align: center;
+        }
+
+        /* Title styling */
+        h1 {
+            font-family: 'Vusemod', sans-serif;
+            font-size: 24px;
+            color: #063C4D;
+            margin-bottom: 20px;
+        }
+
+        /* Labels and Inputs */
+        label {
+            font-weight: bold;
+            text-align: left;
+            color: #083341;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #DAE2E3;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #F4FBFC;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #00D586;
+        }
+
+        /* Submit button */
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #00D586;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #02B389;
+        }
+
+        /* Styling for the result fields */
+        .results input {
+            background-color: #F4FBFC;
+            border: 1px solid #DAE2E3;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #576F76;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>LeadIQ Enrichment Demo</h1>
+        <form id="enrichmentForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+            
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+            
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" autocomplete="email" required>
+            
+            <button type="submit">Enrich Data</button>
+        </form>
+
+        <div class="results">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" readonly>
+
+            <label for="company">Company:</label>
+            <input type="text" id="company" name="company" readonly>
+
+            <label for="email">Email:</label>
+            <input type="text" id="resultEmail" name="resultEmail" readonly>
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" readonly>
+
+            <label for="industry">Industry:</label>
+            <input type="text" id="industry" name="industry" readonly>
+
+            <label for="linkedin">LinkedIn:</label>
+            <input type="text" id="linkedin" name="linkedin" readonly>
+
+            <label for="education">Education:</label>
+            <input type="text" id="education" name="education" readonly>
+
+            <label for="profiles">Social Profiles:</label>
+            <input type="text" id="profiles" name="profiles" readonly>
+        </div>
+
+        <div class="footer">
+            © 2024 LeadIQ - All Rights Reserved.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
