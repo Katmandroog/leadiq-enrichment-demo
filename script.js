@@ -89,7 +89,15 @@ function fetchLeadIQData(firstName, lastName, email) {
         return response.json();
     })
     .then(data => {
-        console.log("API response received:", data);
+        // Log the full API response for debugging
+        console.log("Full API response received:", JSON.stringify(data, null, 2));
+
+        // Log the searchPeople object specifically
+        if (data && data.data && data.data.searchPeople) {
+            console.log("Full searchPeople response:", JSON.stringify(data.data.searchPeople, null, 2));
+        }
+
+        // Call the function to display results on the page
         displayResults(data);
     })
     .catch(error => {
@@ -100,6 +108,7 @@ function fetchLeadIQData(firstName, lastName, email) {
 
 function displayResults(data) {
     console.log("Displaying results:", data);
+
     if (data && data.data && data.data.searchPeople && data.data.searchPeople.results.length > 0) {
         const person = data.data.searchPeople.results[0];
         const position = person.currentPositions && person.currentPositions.length > 0 ? person.currentPositions[0] : {};
@@ -107,14 +116,24 @@ function displayResults(data) {
         const phone = position.phones && position.phones.length > 0 ? position.phones[0].value : 'N/A';
         const profile = person.profiles && person.profiles.length > 0 ? person.profiles[0].url : 'N/A';
         const education = person.education && person.education.length > 0 ? person.education[0].name : 'N/A';
+        const industry = position.companyInfo && position.companyInfo.industry ? position.companyInfo.industry : 'N/A';
+        const linkedinUrl = position.companyInfo && position.companyInfo.linkedinUrl ? position.companyInfo.linkedinUrl : 'N/A';
 
+        // Update form fields with the data
         document.getElementById('title').value = position.title || 'N/A';
         document.getElementById('company').value = position.companyInfo && position.companyInfo.name ? position.companyInfo.name : 'N/A';
         document.getElementById('resultEmail').value = email;
         document.getElementById('phone').value = phone;
-        document.getElementById('linkedin').value = position.companyInfo && position.companyInfo.linkedinUrl ? position.companyInfo.linkedinUrl : 'N/A';
+        document.getElementById('linkedin').value = linkedinUrl;
         document.getElementById('education').value = education;
         document.getElementById('profiles').value = profile;
+        document.getElementById('industry').value = industry;
+
+        // Log any missing data fields for debugging
+        if (industry === 'N/A') console.log("Missing industry data");
+        if (linkedinUrl === 'N/A') console.log("Missing LinkedIn URL");
+        if (education === 'N/A') console.log("Missing education data");
+        if (profile === 'N/A') console.log("Missing social profile data");
 
     } else {
         console.warn("No results found.");
