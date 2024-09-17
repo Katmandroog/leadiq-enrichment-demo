@@ -53,8 +53,6 @@ function fetchLeadIQData(firstName, lastName, email) {
                         id
                         username
                         url
-                        status
-                        updatedAt
                     }
                     education {
                         name
@@ -108,22 +106,16 @@ function displayResults(data) {
         const email = position.emails && position.emails.length > 0 ? position.emails[0].value : 'N/A';
         const phone = position.phones && position.phones.length > 0 ? position.phones[0].value : 'N/A';
         const profile = person.profiles && person.profiles.length > 0 ? person.profiles[0].url : 'N/A';
+        const education = person.education && person.education.length > 0 ? person.education[0].name : 'N/A';
 
-        if (document.getElementById('title')) {
-            document.getElementById('title').value = position.title || 'N/A';
-        }
-        if (document.getElementById('company')) {
-            document.getElementById('company').value = position.companyInfo && position.companyInfo.name ? position.companyInfo.name : 'N/A';
-        }
-        if (document.getElementById('resultEmail')) {
-            document.getElementById('resultEmail').value = email;
-        }
-        if (document.getElementById('phone')) {
-            document.getElementById('phone').value = phone;
-        }
-        if (document.getElementById('profile')) {
-            document.getElementById('profile').value = profile;
-        }
+        document.getElementById('title').value = position.title || 'N/A';
+        document.getElementById('company').value = position.companyInfo && position.companyInfo.name ? position.companyInfo.name : 'N/A';
+        document.getElementById('resultEmail').value = email;
+        document.getElementById('phone').value = phone;
+        document.getElementById('linkedin').value = position.companyInfo && position.companyInfo.linkedinUrl ? position.companyInfo.linkedinUrl : 'N/A';
+        document.getElementById('education').value = education;
+        document.getElementById('profiles').value = profile;
+
     } else {
         console.warn("No results found.");
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
