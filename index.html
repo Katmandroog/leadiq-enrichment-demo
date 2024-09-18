@@ -13,41 +13,43 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            padding: 20px;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 380px 1fr;
+            grid-template-columns: 1fr 2fr; /* Left 1/3, Right 2/3 */
             grid-gap: 30px;
-            width: 80%;
+            width: 100%;
+            max-width: 1200px;
         }
 
-        .use-case-left, .use-case-right {
+        .use-case-panel {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            font-size: 14px;
+            font-size: 16px;
             color: #083341;
-            line-height: 1.6;
+            line-height: 1.8;
         }
 
-        .use-case-left h2, .use-case-right h2 {
+        .use-case-panel h2 {
             font-family: 'Vusemod', sans-serif;
-            font-size: 18px;
+            font-size: 20px;
             color: #063C4D;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
-        .use-case-left ul, .use-case-right ul {
+        .use-case-panel ul {
             list-style-type: none;
             padding: 0;
         }
 
-        .use-case-left ul li::before, .use-case-right ul li::before {
+        .use-case-panel ul li::before {
             content: '✔'; 
             color: #00D586;
-            margin-right: 5px;
+            margin-right: 8px; /* Added space for clarity */
         }
 
         .container {
@@ -61,7 +63,7 @@
 
         h1 {
             font-family: 'Vusemod', sans-serif;
-            font-size: 24px;
+            font-size: 26px;
             color: #063C4D;
             margin-bottom: 20px;
         }
@@ -114,13 +116,17 @@
         }
 
         /* Responsive Design */
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 1024px) {
             .grid-container {
                 grid-template-columns: 1fr;
             }
 
-            .use-case-left, .use-case-right {
+            .use-case-panel {
                 display: none;
+            }
+
+            .container {
+                max-width: 100%;
             }
         }
     </style>
@@ -128,18 +134,21 @@
 <body>
 
     <div class="grid-container">
-        <!-- Left Column: Use Cases -->
-        <div class="use-case-left">
-            <h2>Supercharge Your Lead Management</h2>
-            <p>LeadIQ’s API enables your team to leverage cutting-edge enrichment and job tracking features to maintain up-to-date contact data.</p>
+        <!-- Left Panel: Use Cases from Enablement Material -->
+        <div class="use-case-panel">
+            <h2>LeadIQ API Use Cases</h2>
+            <p>Explore the power of LeadIQ's API to optimize your prospecting workflows:</p>
             <ul>
-                <li>Contact and Account Enrichment</li>
-                <li>Real-time Job Change Notifications</li>
-                <li>Scalable for RevOps</li>
+                <li>Enrichment: Automatically update job titles and contact details with accurate data.</li>
+                <li>Real-Time Job Change Tracking: Know when key contacts change roles, triggering automatic workflows in your CRM.</li>
+                <li>Form Fill Use Case: Submit a form with just an email, and receive full contact information, including title and company.</li>
+                <li>Bulk Enrichment: Quickly enrich large datasets by submitting CSV files through LeadIQ’s API.</li>
+                <li>Competitor Comparisons: Use LeadIQ’s API to compare data from multiple vendors and select the most relevant information.</li>
+                <li>CRM Refresh: Integrate LeadIQ’s API directly into your CRM to refresh and maintain accurate contact records.</li>
             </ul>
         </div>
 
-        <!-- Center Column: Form -->
+        <!-- Right Panel: Form Fill Demo -->
         <div class="container">
             <h1>LeadIQ Enrichment Demo</h1>
             <div id="enrichmentForm">
@@ -184,17 +193,6 @@
             <div class="footer">
                 © 2024 LeadIQ - All Rights Reserved.
             </div>
-        </div>
-
-        <!-- Right Column: Use Cases -->
-        <div class="use-case-right">
-            <h2>Empower Smarter Prospecting</h2>
-            <p>LeadIQ’s public API gives your sales and marketing teams access to real-time enriched data, keeping your leads relevant and actionable.</p>
-            <ul>
-                <li>Form Fill Use Case</li>
-                <li>Bulk Enrichment</li>
-                <li>Seamless Integration</li>
-            </ul>
         </div>
     </div>
 
