@@ -18,12 +18,13 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 2fr; /* Left 1/3, Right 2/3 */
+            grid-template-columns: 1fr 2fr;
             grid-gap: 30px;
             width: 100%;
             max-width: 1200px;
         }
 
+        /* Use Case Panel */
         .use-case-panel {
             background-color: #ffffff;
             padding: 20px;
@@ -49,9 +50,10 @@
         .use-case-panel ul li::before {
             content: '✔'; 
             color: #00D586;
-            margin-right: 8px; /* Added space for clarity */
+            margin-right: 8px;
         }
 
+        /* Form Container */
         .container {
             background-color: white;
             padding: 30px;
@@ -59,8 +61,10 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
             text-align: center;
+            transition: transform 0.3s;
         }
 
+        /* Form Title */
         h1 {
             font-family: 'Vusemod', sans-serif;
             font-size: 26px;
@@ -68,6 +72,7 @@
             margin-bottom: 20px;
         }
 
+        /* Input Fields */
         label {
             font-weight: bold;
             text-align: left;
@@ -85,30 +90,37 @@
             box-sizing: border-box;
             font-size: 16px;
             background-color: #F4FBFC;
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
         }
 
+        /* Input Focus Effects - Skeuomorphic */
         input[type="text"]:focus {
             outline: none;
             border-color: #00D586;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px); /* Slight lift effect on focus */
         }
 
+        /* Button Styles with Gradient */
         button {
             width: 100%;
             padding: 12px 20px;
-            background-color: #00D586;
+            background: linear-gradient(90deg, #00D586 0%, #02B389 100%);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
             margin-top: 10px;
-            transition: background-color 0.3s;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         button:hover {
-            background-color: #02B389;
+            background: linear-gradient(90deg, #02B389 0%, #00D586 100%);
+            transform: translateY(-3px); /* Slight lift on hover */
         }
 
+        /* Footer */
         .footer {
             margin-top: 20px;
             font-size: 12px;
@@ -134,17 +146,17 @@
 <body>
 
     <div class="grid-container">
-        <!-- Left Panel: Use Cases from Enablement Material -->
+        <!-- Left Panel: Use Cases -->
         <div class="use-case-panel">
             <h2>LeadIQ API Use Cases</h2>
             <p>Explore the power of LeadIQ's API to optimize your prospecting workflows:</p>
             <ul>
                 <li>Enrichment: Automatically update job titles and contact details with accurate data.</li>
-                <li>Real-Time Job Change Tracking: Know when key contacts change roles, triggering automatic workflows in your CRM.</li>
-                <li>Form Fill Use Case: Submit a form with just an email, and receive full contact information, including title and company.</li>
-                <li>Bulk Enrichment: Quickly enrich large datasets by submitting CSV files through LeadIQ’s API.</li>
-                <li>Competitor Comparisons: Use LeadIQ’s API to compare data from multiple vendors and select the most relevant information.</li>
-                <li>CRM Refresh: Integrate LeadIQ’s API directly into your CRM to refresh and maintain accurate contact records.</li>
+                <li>Form Fill Use Case: Submit a form with just an email, and receive full contact information.</li>
+                <li>Waterfall Enrichment: Compare data from multiple vendors.</li>
+                <li>Bulk Enrichment: Quickly enrich large datasets via CSV files.</li>
+                <li>Search Capabilities: Advanced API searches by name, email, and job title.</li>
+                <li>CRM Integration: Seamless integration for contact and account tracking.</li>
             </ul>
         </div>
 
@@ -198,4 +210,3 @@
 
     <script src="script.js"></script>
 </body>
-</html>
