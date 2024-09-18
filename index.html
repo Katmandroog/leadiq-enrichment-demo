@@ -15,12 +15,47 @@
             height: 100vh;
         }
 
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 380px 1fr;
+            grid-gap: 30px;
+            width: 80%;
+        }
+
+        .use-case-left, .use-case-right {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            color: #083341;
+            line-height: 1.6;
+        }
+
+        .use-case-left h2, .use-case-right h2 {
+            font-family: 'Vusemod', sans-serif;
+            font-size: 18px;
+            color: #063C4D;
+            margin-bottom: 10px;
+        }
+
+        .use-case-left ul, .use-case-right ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .use-case-left ul li::before, .use-case-right ul li::before {
+            content: '✔'; 
+            color: #00D586;
+            margin-right: 5px;
+        }
+
         .container {
             background-color: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            width: 380px;
+            width: 100%;
             text-align: center;
         }
 
@@ -65,19 +100,11 @@
             cursor: pointer;
             font-size: 18px;
             margin-top: 10px;
+            transition: background-color 0.3s;
         }
 
         button:hover {
             background-color: #02B389;
-        }
-
-        .results input {
-            background-color: #F4FBFC;
-            border: 1px solid #DAE2E3;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-            width: 100%;
         }
 
         .footer {
@@ -85,52 +112,89 @@
             font-size: 12px;
             color: #576F76;
         }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-left, .use-case-right {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>LeadIQ Enrichment Demo</h1>
-        <div id="enrichmentForm">
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email" autocomplete="off" required>
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" autocomplete="off" required>
-            
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" autocomplete="off" required>
-            
-            <button id="enrichButton" type="button">Enrich Data</button>
+    <div class="grid-container">
+        <!-- Left Column: Use Cases -->
+        <div class="use-case-left">
+            <h2>Supercharge Your Lead Management</h2>
+            <p>LeadIQ’s API enables your team to leverage cutting-edge enrichment and job tracking features to maintain up-to-date contact data.</p>
+            <ul>
+                <li>Contact and Account Enrichment</li>
+                <li>Real-time Job Change Notifications</li>
+                <li>Scalable for RevOps</li>
+            </ul>
         </div>
 
-        <div class="results">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" readonly>
+        <!-- Center Column: Form -->
+        <div class="container">
+            <h1>LeadIQ Enrichment Demo</h1>
+            <div id="enrichmentForm">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" autocomplete="off" required>
 
-            <label for="company">Company:</label>
-            <input type="text" id="company" name="company" readonly>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" autocomplete="off" required>
 
-            <label for="resultEmail">Email:</label>
-            <input type="text" id="resultEmail" name="resultEmail" readonly>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" autocomplete="off" required>
 
-            <label for="phone">Phone:</label>
-            <input type="text" id="phone" name="phone" readonly>
+                <button id="enrichButton" type="button">Enrich Data</button>
+            </div>
 
-            <label for="industry">Industry:</label>
-            <input type="text" id="industry" name="industry" readonly>
+            <div class="results">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" readonly>
 
-            <label for="linkedin">LinkedIn:</label>
-            <input type="text" id="linkedin" name="linkedin" readonly>
+                <label for="company">Company:</label>
+                <input type="text" id="company" name="company" readonly>
 
-            <label for="education">Education:</label>
-            <input type="text" id="education" name="education" readonly>
+                <label for="resultEmail">Email:</label>
+                <input type="text" id="resultEmail" name="resultEmail" readonly>
 
-            <label for="profiles">Social Profiles:</label>
-            <input type="text" id="profiles" name="profiles" readonly>
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" readonly>
+
+                <label for="industry">Industry:</label>
+                <input type="text" id="industry" name="industry" readonly>
+
+                <label for="linkedin">LinkedIn:</label>
+                <input type="text" id="linkedin" name="linkedin" readonly>
+
+                <label for="education">Education:</label>
+                <input type="text" id="education" name="education" readonly>
+
+                <label for="profiles">Social Profiles:</label>
+                <input type="text" id="profiles" name="profiles" readonly>
+            </div>
+
+            <div class="footer">
+                © 2024 LeadIQ - All Rights Reserved.
+            </div>
         </div>
 
-        <div class="footer">
-            © 2024 LeadIQ - All Rights Reserved.
+        <!-- Right Column: Use Cases -->
+        <div class="use-case-right">
+            <h2>Empower Smarter Prospecting</h2>
+            <p>LeadIQ’s public API gives your sales and marketing teams access to real-time enriched data, keeping your leads relevant and actionable.</p>
+            <ul>
+                <li>Form Fill Use Case</li>
+                <li>Bulk Enrichment</li>
+                <li>Seamless Integration</li>
+            </ul>
         </div>
     </div>
 
