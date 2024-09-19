@@ -23,19 +23,20 @@
         }
 
         .logo-container img {
-            max-width: 300px;  
+            max-width: 300px;
             height: auto;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            grid-gap: 30px;
+            grid-template-columns: 1fr 2fr 1fr; /* Adjusted to create equal spacing */
+            grid-gap: 30px; /* Increased gap between form and sections */
             width: 100%;
             max-width: 1200px;
         }
 
-        .panel {
+        /* Use Case Panel */
+        .use-case-panel {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 15px;
@@ -43,49 +44,24 @@
             font-size: 16px;
             color: #083341;
             line-height: 1.8;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
-        .panel h2 {
+        .use-case-panel h2 {
             font-family: 'Vusemod', sans-serif;
             font-size: 20px;
             color: #063C4D;
             margin-bottom: 15px;
         }
 
-        .use-case-panel ul,
-        .activity-feed ul {
+        .use-case-panel ul {
             list-style-type: none;
             padding: 0;
         }
 
-        .use-case-panel ul li::before,
-        .activity-feed ul li::before {
+        .use-case-panel ul li::before {
             content: '✔'; 
             color: #00D586;
             margin-right: 8px;
-        }
-
-        .activity-feed ul li {
-            margin-bottom: 8px;
-            color: #083341;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .activity-feed ul li::before {
-            content: '• ';
-            color: #00D586;
-            font-size: 18px;
-            margin-right: 8px;
-        }
-
-        .activity-feed ul .success-message {
-            font-weight: bold;
-            color: #00D586;
         }
 
         /* Form Container */
@@ -96,13 +72,24 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
             text-align: center;
+            transition: transform 0.3s;
         }
 
+        /* Form Title */
         h1 {
             font-family: 'Vusemod', sans-serif;
             font-size: 26px;
             color: #063C4D;
             margin-bottom: 20px;
+        }
+
+        /* Input Fields */
+        label {
+            font-weight: bold;
+            text-align: left;
+            color: #083341;
+            margin-bottom: 5px;
+            display: block;
         }
 
         input[type="text"] {
@@ -115,6 +102,13 @@
             font-size: 16px;
             background-color: #F4FBFC;
             transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #00D586;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
         }
 
         button {
@@ -135,13 +129,52 @@
             transform: translateY(-3px);
         }
 
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #576F76;
+        }
+
+        /* Activity Feed Panel (Right Side) */
+        .activity-feed-panel {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            color: #083341;
+            line-height: 1.8;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .activity-feed-panel h2 {
+            font-family: 'Vusemod', sans-serif;
+            font-size: 20px;
+            color: #063C4D;
+            margin-bottom: 15px;
+        }
+
+        .log-entry {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #083341;
+        }
+
+        .log-entry::before {
+            content: "•"; 
+            color: #00D586; 
+            margin-right: 8px;
+        }
+
         @media screen and (max-width: 1024px) {
             .grid-container {
                 grid-template-columns: 1fr;
             }
 
-            .use-case-panel {
-                display: none;
+            .use-case-panel, .activity-feed-panel {
+                display: block;
+                margin-bottom: 20px;
             }
 
             .container {
@@ -159,7 +192,7 @@
 
     <div class="grid-container">
         <!-- Left Panel: Use Cases -->
-        <div class="panel use-case-panel">
+        <div class="use-case-panel">
             <h2>LeadIQ API Use Cases</h2>
             <p>Explore the power of LeadIQ's API to optimize your prospecting workflows:</p>
             <ul>
@@ -172,7 +205,7 @@
             </ul>
         </div>
 
-        <!-- Form Fill Demo -->
+        <!-- Right Panel: Form Fill Demo -->
         <div class="container">
             <h1>LeadIQ Enrichment Demo</h1>
             <div id="enrichmentForm">
@@ -213,12 +246,16 @@
                 <label for="profiles">Social Profiles:</label>
                 <input type="text" id="profiles" name="profiles" readonly>
             </div>
+
+            <div class="footer">
+                © 2024 LeadIQ - All Rights Reserved.
+            </div>
         </div>
 
-        <!-- Right Panel: Activity Feed -->
-        <div class="panel activity-feed">
+        <!-- Right Panel: API Activity Feed -->
+        <div class="activity-feed-panel">
             <h2>API Activity Feed</h2>
-            <ul id="log-messages"></ul>
+            <div id="log-messages"></div>
         </div>
     </div>
 
