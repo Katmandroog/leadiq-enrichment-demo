@@ -32,10 +32,9 @@
             grid-template-columns: 1fr 2fr 1fr;
             grid-gap: 30px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px; /* Increased width for extra space */
         }
 
-        /* Use Case Panel */
         .use-case-panel, .log-panel {
             background-color: #ffffff;
             padding: 20px;
@@ -59,38 +58,17 @@
         }
 
         .use-case-panel ul li::before {
-            content: '✔';
+            content: '✔'; 
             color: #00D586;
             margin-right: 8px;
         }
 
-        /* Log Container */
-        .log-panel {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .log-panel ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .log-panel ul li::before {
-            content: '•';
-            color: #02B389;
-            margin-right: 10px;
-        }
-
-        /* Form Container */
         .container {
             background-color: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
             text-align: center;
         }
 
@@ -101,12 +79,12 @@
             margin-bottom: 20px;
         }
 
-        /* Input Fields */
         label {
             font-weight: bold;
+            text-align: left;
             color: #083341;
-            display: block;
             margin-bottom: 5px;
+            display: block;
         }
 
         input[type="text"] {
@@ -118,14 +96,13 @@
             box-sizing: border-box;
             font-size: 16px;
             background-color: #F4FBFC;
-            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            text-align: left; /* Align text to the left */
         }
 
         input[type="text"]:focus {
             outline: none;
             border-color: #00D586;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transform: translateY(-3px);
         }
 
         button {
@@ -141,11 +118,62 @@
 
         button:hover {
             background: linear-gradient(90deg, #02B389 0%, #00D586 100%);
-            transform: translateY(-3px);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #576F76;
+        }
+
+        /* Log Panel - renamed and resized */
+        .log-panel {
+            height: 400px; /* Adjusted height */
+            overflow-y: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            color: #083341;
+            line-height: 1.8;
+        }
+
+        .log-panel ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .log-panel ul li::before {
+            content: '•'; 
+            margin-right: 8px;
+            color: #00D586;
+        }
+
+        .log-panel h2 {
+            font-family: 'Vusemod', sans-serif;
+            font-size: 20px;
+            color: #063C4D;
+            margin-bottom: 15px;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .use-case-panel {
+                display: none;
+            }
+
+            .container {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+
     <!-- Logo Container -->
     <div class="logo-container">
         <img src="https://katmandroog.github.io/leadiq-enrichment-demo/assets/images/logo.png" alt="LeadIQ Logo">
@@ -155,6 +183,7 @@
         <!-- Left Panel: Use Cases -->
         <div class="use-case-panel">
             <h2>LeadIQ API Use Cases</h2>
+            <p>Explore the power of LeadIQ's API to optimize your prospecting workflows:</p>
             <ul>
                 <li>Enrichment: Automatically update job titles and contact details with accurate data.</li>
                 <li>Form Fill Use Case: Submit a form with just an email, and receive full contact information.</li>
@@ -165,7 +194,7 @@
             </ul>
         </div>
 
-        <!-- Middle Panel: Form Fill Demo -->
+        <!-- Right Panel: Form Fill Demo -->
         <div class="container">
             <h1>LeadIQ Enrichment Demo</h1>
             <div id="enrichmentForm">
@@ -212,12 +241,10 @@
             </div>
         </div>
 
-        <!-- Right Panel: Logs -->
+        <!-- Right Panel: API Activity Feed -->
         <div class="log-panel">
-            <h2>Logs</h2>
-            <ul id="log-messages">
-                <!-- Logs will be appended here -->
-            </ul>
+            <h2>API Activity Feed</h2>
+            <ul id="log-messages"></ul>
         </div>
     </div>
 
