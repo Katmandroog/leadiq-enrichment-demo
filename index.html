@@ -13,7 +13,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            height: 100vh;
             padding: 20px;
         }
 
@@ -29,25 +29,25 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-gap: 30px;
+            grid-template-columns: 1fr 2fr 1fr; /* Adjusted to create equal spacing */
+            grid-gap: 30px; /* Space between the actual containers */
             width: 100%;
             max-width: 1200px;
-            padding: 20px;
+            padding: 20px; /* Optional: Add padding around the entire grid */
         }
 
-        .use-case-panel, .container, .activity-feed-panel {
+        /* Use Case Panel */
+        .use-case-panel {
             background-color: #ffffff;
-            padding: 30px;
+            padding: 30px; /* Internal space */
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             font-size: 16px;
             color: #083341;
             line-height: 1.8;
-            width: 100%;
         }
 
-        .use-case-panel h2, .activity-feed-panel h2 {
+        .use-case-panel h2 {
             font-family: 'Vusemod', sans-serif;
             font-size: 20px;
             color: #063C4D;
@@ -65,6 +65,18 @@
             margin-right: 8px;
         }
 
+        /* Form Container */
+        .container {
+            background-color: white;
+            padding: 30px; /* Ensure this has the same padding as the others */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        /* Form Title */
         h1 {
             font-family: 'Vusemod', sans-serif;
             font-size: 26px;
@@ -72,6 +84,7 @@
             margin-bottom: 20px;
         }
 
+        /* Input Fields */
         label {
             font-weight: bold;
             text-align: left;
@@ -123,9 +136,24 @@
             color: #576F76;
         }
 
+        /* Activity Feed Panel (Right Side) */
         .activity-feed-panel {
+            background-color: #ffffff;
+            padding: 30px; /* Added padding for more internal space */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            color: #083341;
+            line-height: 1.8;
             max-height: 500px;
             overflow-y: auto;
+        }
+
+        .activity-feed-panel h2 {
+            font-family: 'Vusemod', sans-serif;
+            font-size: 20px;
+            color: #063C4D;
+            margin-bottom: 15px;
         }
 
         .log-entry {
@@ -145,18 +173,25 @@
                 grid-template-columns: 1fr;
             }
 
-            .use-case-panel, .activity-feed-panel, .container {
-                width: 100%;
+            .use-case-panel, .activity-feed-panel {
+                display: block;
+            }
+
+            .container {
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
+
+    <!-- Logo Container -->
     <div class="logo-container">
         <img src="https://katmandroog.github.io/leadiq-enrichment-demo/assets/images/logo.png" alt="LeadIQ Logo">
     </div>
 
     <div class="grid-container">
+        <!-- Left Panel: Use Cases -->
         <div class="use-case-panel">
             <h2>LeadIQ API Use Cases</h2>
             <p>Explore the power of LeadIQ's API to optimize your prospecting workflows:</p>
@@ -170,6 +205,7 @@
             </ul>
         </div>
 
+        <!-- Center Panel: Form Fill Demo -->
         <div class="container">
             <h1>LeadIQ Enrichment Demo</h1>
             <div id="enrichmentForm">
@@ -216,6 +252,7 @@
             </div>
         </div>
 
+        <!-- Right Panel: API Activity Feed -->
         <div class="activity-feed-panel">
             <h2>API Activity Feed</h2>
             <div id="log-messages"></div>
