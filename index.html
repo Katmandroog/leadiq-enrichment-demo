@@ -23,13 +23,13 @@
         }
 
         .logo-container img {
-            max-width: 300px;  /* Increased size for better visibility */
+            max-width: 300px; 
             height: auto;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr 2fr 1fr; /* Three columns: Use Cases, Form, Logs */
             grid-gap: 30px;
             width: 100%;
             max-width: 1200px;
@@ -75,7 +75,6 @@
             transition: transform 0.3s;
         }
 
-        /* Form Title */
         h1 {
             font-family: 'Vusemod', sans-serif;
             font-size: 26px;
@@ -83,7 +82,6 @@
             margin-bottom: 20px;
         }
 
-        /* Input Fields */
         label {
             font-weight: bold;
             text-align: left;
@@ -135,6 +133,15 @@
             color: #576F76;
         }
 
+        /* Style for the logs panel */
+        #log-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
         @media screen and (max-width: 1024px) {
             .grid-container {
                 grid-template-columns: 1fr;
@@ -172,7 +179,7 @@
             </ul>
         </div>
 
-        <!-- Right Panel: Form Fill Demo -->
+        <!-- Middle Panel: Form Fill Demo -->
         <div class="container">
             <h1>LeadIQ Enrichment Demo</h1>
             <div id="enrichmentForm">
@@ -213,10 +220,12 @@
                 <label for="profiles">Social Profiles:</label>
                 <input type="text" id="profiles" name="profiles" readonly>
             </div>
+        </div>
 
-            <div class="footer">
-                © 2024 LeadIQ - All Rights Reserved.
-            </div>
+        <!-- Right Panel: Logs -->
+        <div id="log-container">
+            <h3>Logs</h3>
+            <div id="log-messages"></div>
         </div>
     </div>
 
