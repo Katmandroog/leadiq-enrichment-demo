@@ -1,29 +1,31 @@
+  // Add click event listener to the "Enrich Data" button
 document.getElementById('enrichButton').addEventListener('click', function() {
-    console.log("Enrich Data button clicked");
+    logMessage("Enrich Data button clicked");
 
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const email = document.getElementById('email').value.trim();
 
-    // Ensure all fields are filled before making the API call
+    // Validate inputs and initiate API call
     if (firstName && lastName && validateEmail(email)) {
+        logMessage(`Starting API call for ${firstName} ${lastName} with email: ${email}`);
         fetchLeadIQData(firstName, lastName, email);
     } else {
+        logMessage("Invalid input. Please ensure all fields are filled out correctly.", true);
         alert("Please fill out all fields with valid data before submitting.");
     }
 });
 
-// Helper function to validate email
+// Helper function to validate email format
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
 
+// Function to make the API call
 function fetchLeadIQData(firstName, lastName, email) {
     const apiUrl = 'https://api.leadiq.com/graphql';
     const apiKey = 'aG1fcHJvZF9iYzRmZjk4YjQ2YjFmN2ZmMmUzNmEzMWUxOTZiOTczNTk3NWNmYTUyMzRiODcyMjczOTRkYTlmN2JiMjVhYzNj';
-
-    console.log("Making API call to LeadIQ with:", firstName, lastName, email);
 
     const query = `
         query SearchPeople($input: SearchPeopleInput!) {
@@ -72,6 +74,9 @@ function fetchLeadIQData(firstName, lastName, email) {
         }
     };
 
+    logMessage("Making API request...");
+
+    // Fetch API with POST method
     fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -83,32 +88,24 @@ function fetchLeadIQData(firstName, lastName, email) {
     .then(response => {
         if (!response.ok) {
             return response.json().then(error => {
-                throw new Error(`HTTP error! status: ${response.status}, details: ${JSON.stringify(error)}`);
+                logMessage(`API Error: ${response.status}. ${JSON.stringify(error)}`, true);
+                throw new Error(`HTTP error! status: ${response.status}`);
             });
         }
         return response.json();
     })
     .then(data => {
-        // Log the full API response for debugging
-        console.log("Full API response received:", JSON.stringify(data, null, 2));
-
-        // Log the searchPeople object specifically
-        if (data && data.data && data.data.searchPeople) {
-            console.log("Full searchPeople response:", JSON.stringify(data.data.searchPeople, null, 2));
-        }
-
-        // Call the function to display results on the page
+        logMessage("API response received. Processing results...");
         displayResults(data);
     })
     .catch(error => {
-        console.error('Error fetching data:', error);
+        logMessage(`Error during API call: ${error.message}`, true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">Error fetching data: ${error.message}</p>`;
     });
 }
 
+// Function to display the API results on the form
 function displayResults(data) {
-    console.log("Displaying results:", data);
-
     if (data && data.data && data.data.searchPeople && data.data.searchPeople.results.length > 0) {
         const person = data.data.searchPeople.results[0];
         const position = person.currentPositions && person.currentPositions.length > 0 ? person.currentPositions[0] : {};
@@ -129,14 +126,19 @@ function displayResults(data) {
         document.getElementById('profiles').value = profile;
         document.getElementById('industry').value = industry;
 
-        // Log any missing data fields for debugging
-        if (industry === 'N/A') console.log("Missing industry data");
-        if (linkedinUrl === 'N/A') console.log("Missing LinkedIn URL");
-        if (education === 'N/A') console.log("Missing education data");
-        if (profile === 'N/A') console.log("Missing social profile data");
-
+        logMessage("Results displayed successfully.");
     } else {
-        console.warn("No results found.");
+        logMessage("No matching results found.", true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
     }
+}
+
+// Helper function to log messages in the log-container
+function logMessage(message, isError = false) {
+    const logContainer = document.getElementById('log-messages');
+    const logEntry = document.createElement('div');
+    logEntry.textContent = message;
+    logEntry.style.color = isError ? 'red' : 'black';
+    logContainer.appendChild(logEntry);
+    logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the bottom
 }
