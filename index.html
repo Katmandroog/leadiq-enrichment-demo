@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LeadIQ Enrichment Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadIQ Enrichment Demo</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #F4FBFC;
             margin: 0;
-            padding: 20px;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .logo-container {
@@ -31,24 +32,19 @@
             grid-template-columns: 1fr 30px 2fr 30px 1fr;
             width: 100%;
             max-width: 1200px;
-            flex-grow: 1;
+            padding: 20px;
         }
 
         .use-case-panel {
             grid-column: 1 / 2;
-            grid-row: 1 / 2;
         }
 
         .container {
             grid-column: 3 / 4;
-            grid-row: 1 / 2;
         }
 
         .activity-feed-panel {
             grid-column: 5 / 6;
-            grid-row: 1 / 2;
-            display: flex;
-            flex-direction: column;
         }
 
         .use-case-panel, .container, .activity-feed-panel {
@@ -59,40 +55,30 @@
             font-size: 16px;
             color: #083341;
             line-height: 1.8;
-            box-sizing: border-box;
         }
 
-        /* Headers */
-        .use-case-panel h2,
-        .activity-feed-panel h2,
-        .container h1 {
+        .use-case-panel h2, .activity-feed-panel h2, h1 {
             font-family: 'Vusemod', sans-serif;
+            font-size: 20px;
             color: #063C4D;
             margin-bottom: 15px;
         }
 
-        .container h1 {
+        h1 {
             font-size: 26px;
         }
 
-        .use-case-panel h2,
-        .activity-feed-panel h2 {
-            font-size: 20px;
-        }
-
-        /* Use Case Panel */
         .use-case-panel ul {
             list-style-type: none;
             padding: 0;
         }
 
         .use-case-panel ul li::before {
-            content: '✔';
+            content: '✔'; 
             color: #00D586;
             margin-right: 8px;
         }
 
-        /* Form Labels */
         label {
             font-weight: bold;
             text-align: left;
@@ -101,16 +87,15 @@
             display: block;
         }
 
-        /* Input Fields */
         input[type="text"] {
             width: 100%;
             padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #DAE2E3;
             border-radius: 8px;
+            box-sizing: border-box;
             font-size: 16px;
             background-color: #F4FBFC;
-            box-sizing: border-box;
             transition: box-shadow 0.3s ease, transform 0.2s ease;
         }
 
@@ -121,7 +106,6 @@
             transform: translateY(-3px);
         }
 
-        /* Button */
         button {
             width: 100%;
             padding: 12px 20px;
@@ -140,16 +124,14 @@
             transform: translateY(-3px);
         }
 
-        /* Footer */
         .footer {
             margin-top: 20px;
             font-size: 12px;
             color: #576F76;
         }
 
-        /* Activity Feed Panel */
-        #log-messages {
-            flex-grow: 1;
+        .activity-feed-panel {
+            max-height: 500px;
             overflow-y: auto;
         }
 
@@ -160,35 +142,29 @@
         }
 
         .log-entry::before {
-            content: "•";
-            color: #00D586;
+            content: "•"; 
+            color: #00D586; 
             margin-right: 8px;
         }
 
-        /* Responsive Design */
         @media screen and (max-width: 1024px) {
             .grid-container {
                 grid-template-columns: 1fr;
                 grid-gap: 20px;
             }
 
-            .use-case-panel,
-            .container,
-            .activity-feed-panel {
+            .use-case-panel, .container, .activity-feed-panel {
                 grid-column: 1;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Logo Container -->
     <div class="logo-container">
         <img src="https://katmandroog.github.io/leadiq-enrichment-demo/assets/images/logo.png" alt="LeadIQ Logo">
     </div>
 
-    <!-- Grid Container -->
     <div class="grid-container">
-        <!-- Left Panel: Use Cases -->
         <div class="use-case-panel">
             <h2>LeadIQ API Use Cases</h2>
             <p>Explore the power of LeadIQ's API to optimize your prospecting workflows:</p>
@@ -202,7 +178,6 @@
             </ul>
         </div>
 
-        <!-- Center Panel: Form Fill Demo -->
         <div class="container">
             <h1>LeadIQ Enrichment Demo</h1>
             <div id="enrichmentForm">
@@ -249,14 +224,12 @@
             </div>
         </div>
 
-        <!-- Right Panel: API Activity Feed -->
         <div class="activity-feed-panel">
             <h2>API Activity Feed</h2>
             <div id="log-messages"></div>
         </div>
     </div>
 
-    <!-- Include your script if needed -->
-    <!-- <script src="script.js"></script> -->
+    <script src="script.js"></script>
 </body>
 </html>
