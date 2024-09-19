@@ -1,16 +1,16 @@
 document.getElementById('enrichButton').addEventListener('click', function() {
-    logMessage("Enrich Data button clicked");
-
+    logMessage("✅ Enrich Data button clicked. Buckle up!");
+    
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const email = document.getElementById('email').value.trim();
 
     // Ensure all fields are filled before making the API call
     if (firstName && lastName && validateEmail(email)) {
-        logMessage(`Starting API call for ${firstName} ${lastName} with email: ${email}`);
+        logMessage(`🚀 Starting API call for ${firstName} ${lastName} with email: ${email}. Hold on to your pipeline.`);
         fetchLeadIQData(firstName, lastName, email);
     } else {
-        logMessage("Please fill out all fields with valid data before submitting.", true);
+        logMessage("⚠️ Missing data. Fill in all fields and double-check that email, champ!", true);
         alert("Please fill out all fields with valid data before submitting.");
     }
 });
@@ -25,7 +25,7 @@ function fetchLeadIQData(firstName, lastName, email) {
     const apiUrl = 'https://api.leadiq.com/graphql';
     const apiKey = 'aG1fcHJvZF9iYzRmZjk4YjQ2YjFmN2ZmMmUzNmEzMWUxOTZiOTczNTk3NWNmYTUyMzRiODcyMjczOTRkYTlmN2JiMjVhYzNj';
 
-    logMessage("Making API request to LeadIQ...");
+    logMessage("📡 Making API request to LeadIQ... Fingers crossed!");
 
     const query = `
         query SearchPeople($input: SearchPeopleInput!) {
@@ -85,26 +85,26 @@ function fetchLeadIQData(firstName, lastName, email) {
     .then(response => {
         if (!response.ok) {
             return response.json().then(error => {
-                logMessage(`API Error: ${response.status}. Details: ${JSON.stringify(error)}`, true);
+                logMessage(`❌ API Error: ${response.status}. Our sales ops dreams are shattered. Details: ${JSON.stringify(error)}`, true);
                 throw new Error(`HTTP error! status: ${response.status}, details: ${JSON.stringify(error)}`);
             });
         }
-        logMessage("API response received. Processing results...");
+        logMessage("✅ API response received. Processing... let's reel in the results!");
         return response.json();
     })
     .then(data => {
-        logMessage("API response processed.");
+        logMessage("📊 API response processed. Displaying your shiny new data!");
         displayResults(data);
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-        logMessage(`Error fetching data: ${error.message}`, true);
+        logMessage(`❗ Error fetching data: ${error.message}. Houston, we have a problem...`, true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">Error fetching data: ${error.message}</p>`;
     });
 }
 
 function displayResults(data) {
-    logMessage("Displaying results...");
+    logMessage("📝 Displaying results...");
 
     if (data && data.data && data.data.searchPeople && data.data.searchPeople.results.length > 0) {
         const person = data.data.searchPeople.results[0];
@@ -126,9 +126,9 @@ function displayResults(data) {
         document.getElementById('profiles').value = profile;
         document.getElementById('industry').value = industry;
 
-        logMessage("Results displayed successfully.");
+        logMessage("🎉 Results displayed successfully. Ready for that outreach yet?");
     } else {
-        logMessage("No results found or incomplete response.", true);
+        logMessage("🤷 No results found. Looks like your contact ghosted you.", true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
     }
 }
@@ -137,8 +137,9 @@ function displayResults(data) {
 function logMessage(message, isError = false) {
     const logContainer = document.getElementById('log-messages');
     const logEntry = document.createElement('li');
-    logEntry.textContent = message;
+    logEntry.innerHTML = `<span style="font-size: 18px;">•</span> ${message}`;
     logEntry.style.color = isError ? 'red' : 'black';
+    logEntry.style.margin = '8px 0';
     logContainer.appendChild(logEntry);
     logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the bottom
 }
