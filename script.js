@@ -1,21 +1,21 @@
 document.getElementById('enrichButton').addEventListener('click', function() {
-    logMessage("✅ Enrich Data button clicked. Buckle up!");
-    
+    addLogMessage("🚀 Enrich Data button activated. We're off to the races!");
+
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const email = document.getElementById('email').value.trim();
 
     // Ensure all fields are filled before making the API call
     if (firstName && lastName && validateEmail(email)) {
-        logMessage(`🚀 Starting API call for ${firstName} ${lastName} with email: ${email}. Hold on to your pipeline.`);
+        addLogMessage(`👀 Looking for ${firstName} ${lastName} in the database. Let’s see what we find!`);
         fetchLeadIQData(firstName, lastName, email);
     } else {
-        logMessage("⚠️ Missing data. Fill in all fields and double-check that email, champ!", true);
+        addLogMessage("❌ Oops! You forgot something. Double-check those fields.", true);
         alert("Please fill out all fields with valid data before submitting.");
     }
 });
 
-// Helper function to validate email format
+// Helper function to validate email
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -25,7 +25,7 @@ function fetchLeadIQData(firstName, lastName, email) {
     const apiUrl = 'https://api.leadiq.com/graphql';
     const apiKey = 'aG1fcHJvZF9iYzRmZjk4YjQ2YjFmN2ZmMmUzNmEzMWUxOTZiOTczNTk3NWNmYTUyMzRiODcyMjczOTRkYTlmN2JiMjVhYzNj';
 
-    logMessage("📡 Making API request to LeadIQ... Fingers crossed!");
+    addLogMessage("⏳ Sending the request to the API... cross your fingers!");
 
     const query = `
         query SearchPeople($input: SearchPeopleInput!) {
@@ -85,27 +85,26 @@ function fetchLeadIQData(firstName, lastName, email) {
     .then(response => {
         if (!response.ok) {
             return response.json().then(error => {
-                logMessage(`❌ API Error: ${response.status}. Our sales ops dreams are shattered. Details: ${JSON.stringify(error)}`, true);
+                addLogMessage(`⚠️ API Error: ${response.status}. More details: ${JSON.stringify(error)}`, true);
                 throw new Error(`HTTP error! status: ${response.status}, details: ${JSON.stringify(error)}`);
             });
         }
-        logMessage("✅ API response received. Processing... let's reel in the results!");
+        addLogMessage("✅ Success! API responded, let's check it out...");
         return response.json();
     })
     .then(data => {
-        logMessage("📊 API response processed. Displaying your shiny new data!");
+        addLogMessage("🔍 Processing the results…");
         displayResults(data);
+        addLogMessage("🎉 Holy Smokes that was Fast! Results displayed successfully.");
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-        logMessage(`❗ Error fetching data: ${error.message}. Houston, we have a problem...`, true);
+        addLogMessage(`❌ Error fetching data: ${error.message}`, true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">Error fetching data: ${error.message}</p>`;
     });
 }
 
 function displayResults(data) {
-    logMessage("📝 Displaying results...");
-
     if (data && data.data && data.data.searchPeople && data.data.searchPeople.results.length > 0) {
         const person = data.data.searchPeople.results[0];
         const position = person.currentPositions && person.currentPositions.length > 0 ? person.currentPositions[0] : {};
@@ -126,20 +125,19 @@ function displayResults(data) {
         document.getElementById('profiles').value = profile;
         document.getElementById('industry').value = industry;
 
-        logMessage("🎉 Results displayed successfully. Ready for that outreach yet?");
+        addLogMessage("📝 Results displayed successfully!");
     } else {
-        logMessage("🤷 No results found. Looks like your contact ghosted you.", true);
+        addLogMessage("⚠️ No results found. Maybe try again with different info?", true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
     }
 }
 
-// Function to log messages in the log container
-function logMessage(message, isError = false) {
+// Helper function to add messages in the "What's Happening" section
+function addLogMessage(message, isError = false) {
     const logContainer = document.getElementById('log-messages');
-    const logEntry = document.createElement('li');
-    logEntry.innerHTML = `<span style="font-size: 18px;">•</span> ${message}`;
+    const logEntry = document.createElement('div');
+    logEntry.innerHTML = `<li>${message}</li>`;
     logEntry.style.color = isError ? 'red' : 'black';
-    logEntry.style.margin = '8px 0';
     logContainer.appendChild(logEntry);
     logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the bottom
 }
