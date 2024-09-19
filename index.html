@@ -32,7 +32,7 @@
             grid-template-columns: 1fr 2fr 1fr;
             grid-gap: 30px;
             width: 100%;
-            max-width: 1400px; /* Increased width for extra space */
+            max-width: 1400px; /* Ensuring enough space for all sections */
         }
 
         .use-case-panel, .log-panel {
@@ -43,6 +43,7 @@
             font-size: 16px;
             color: #083341;
             line-height: 1.8;
+            height: 100%; /* Ensure it stretches the full container */
         }
 
         .use-case-panel h2, .log-panel h2 {
@@ -96,7 +97,7 @@
             box-sizing: border-box;
             font-size: 16px;
             background-color: #F4FBFC;
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
 
         input[type="text"]:focus {
@@ -126,9 +127,7 @@
             color: #576F76;
         }
 
-        /* Log Panel - renamed and resized */
         .log-panel {
-            height: 400px; /* Adjusted height */
             overflow-y: auto;
             background-color: #ffffff;
             padding: 20px;
@@ -137,6 +136,7 @@
             font-size: 16px;
             color: #083341;
             line-height: 1.8;
+            height: 100%; /* Expands the height to match use case panel */
         }
 
         .log-panel ul {
