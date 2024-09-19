@@ -126,7 +126,7 @@ function displayResults(data) {
         document.getElementById('industry').value = industry;
 
         logMessage("✅ Results displayed successfully!");
-        logMessage("🔥 Holy Smokes that was Fast! Results displayed successfully.");
+        logMessage("🔥 Holy Smokes that was Fast!");
     } else {
         logMessage("❌ No results found or incomplete response.", true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
