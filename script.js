@@ -1,5 +1,7 @@
-document.getElementById('enrichButton').addEventListener('click', function() {
-    addLogMessage("🚀 Enrich Data button activated. We're off to the races!");
+
+
+ document.getElementById('enrichButton').addEventListener('click', function() {
+    logMessage("🟢 Enrich Data button activated. We're off to the races!");
 
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
@@ -7,10 +9,10 @@ document.getElementById('enrichButton').addEventListener('click', function() {
 
     // Ensure all fields are filled before making the API call
     if (firstName && lastName && validateEmail(email)) {
-        addLogMessage(`👀 Looking for ${firstName} ${lastName} in the database. Let’s see what we find!`);
+        logMessage(`🚀 Starting API call for ${firstName} ${lastName} with email: ${email}. Hold on to your pipeline.`);
         fetchLeadIQData(firstName, lastName, email);
     } else {
-        addLogMessage("❌ Oops! You forgot something. Double-check those fields.", true);
+        logMessage("❌ Please fill out all fields with valid data before submitting.", true);
         alert("Please fill out all fields with valid data before submitting.");
     }
 });
@@ -25,7 +27,7 @@ function fetchLeadIQData(firstName, lastName, email) {
     const apiUrl = 'https://api.leadiq.com/graphql';
     const apiKey = 'aG1fcHJvZF9iYzRmZjk4YjQ2YjFmN2ZmMmUzNmEzMWUxOTZiOTczNTk3NWNmYTUyMzRiODcyMjczOTRkYTlmN2JiMjVhYzNj';
 
-    addLogMessage("⏳ Sending the request to the API... cross your fingers!");
+    logMessage("📡 Making API request to LeadIQ... Fingers crossed!");
 
     const query = `
         query SearchPeople($input: SearchPeopleInput!) {
@@ -85,21 +87,19 @@ function fetchLeadIQData(firstName, lastName, email) {
     .then(response => {
         if (!response.ok) {
             return response.json().then(error => {
-                addLogMessage(`⚠️ API Error: ${response.status}. More details: ${JSON.stringify(error)}`, true);
+                logMessage(`❌ API Error: ${response.status}. Details: ${JSON.stringify(error)}`, true);
                 throw new Error(`HTTP error! status: ${response.status}, details: ${JSON.stringify(error)}`);
             });
         }
-        addLogMessage("✅ Success! API responded, let's check it out...");
+        logMessage("✅ API response received. Processing... let's reel in the results!");
         return response.json();
     })
     .then(data => {
-        addLogMessage("🔍 Processing the results…");
+        logMessage("📊 API response processed. Displaying your shiny new data!");
         displayResults(data);
-        addLogMessage("🎉 Holy Smokes that was Fast! Results displayed successfully.");
     })
     .catch(error => {
-        console.error('Error fetching data:', error);
-        addLogMessage(`❌ Error fetching data: ${error.message}`, true);
+        logMessage(`❌ Error fetching data: ${error.message}`, true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">Error fetching data: ${error.message}</p>`;
     });
 }
@@ -125,18 +125,20 @@ function displayResults(data) {
         document.getElementById('profiles').value = profile;
         document.getElementById('industry').value = industry;
 
-        addLogMessage("📝 Results displayed successfully!");
+        logMessage("✅ Results displayed successfully!");
+        logMessage("🔥 Holy Smokes that was Fast! Results displayed successfully.");
     } else {
-        addLogMessage("⚠️ No results found. Maybe try again with different info?", true);
+        logMessage("❌ No results found or incomplete response.", true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
     }
 }
 
-// Helper function to add messages in the "What's Happening" section
-function addLogMessage(message, isError = false) {
+// Helper function to log messages in the log-container
+function logMessage(message, isError = false) {
     const logContainer = document.getElementById('log-messages');
     const logEntry = document.createElement('div');
-    logEntry.innerHTML = `<li>${message}</li>`;
+    logEntry.textContent = message;
+    logEntry.classList.add('log-entry');
     logEntry.style.color = isError ? 'red' : 'black';
     logContainer.appendChild(logEntry);
     logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the bottom
