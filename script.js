@@ -1,4 +1,3 @@
-  // Add click event listener to the "Enrich Data" button
 document.getElementById('enrichButton').addEventListener('click', function() {
     logMessage("Enrich Data button clicked");
 
@@ -6,12 +5,12 @@ document.getElementById('enrichButton').addEventListener('click', function() {
     const lastName = document.getElementById('lastName').value.trim();
     const email = document.getElementById('email').value.trim();
 
-    // Validate inputs and initiate API call
+    // Ensure all fields are filled before making the API call
     if (firstName && lastName && validateEmail(email)) {
         logMessage(`Starting API call for ${firstName} ${lastName} with email: ${email}`);
         fetchLeadIQData(firstName, lastName, email);
     } else {
-        logMessage("Invalid input. Please ensure all fields are filled out correctly.", true);
+        logMessage("Please fill out all fields with valid data before submitting.", true);
         alert("Please fill out all fields with valid data before submitting.");
     }
 });
@@ -22,10 +21,11 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-// Function to make the API call
 function fetchLeadIQData(firstName, lastName, email) {
     const apiUrl = 'https://api.leadiq.com/graphql';
     const apiKey = 'aG1fcHJvZF9iYzRmZjk4YjQ2YjFmN2ZmMmUzNmEzMWUxOTZiOTczNTk3NWNmYTUyMzRiODcyMjczOTRkYTlmN2JiMjVhYzNj';
+
+    logMessage("Making API request to LeadIQ...");
 
     const query = `
         query SearchPeople($input: SearchPeopleInput!) {
@@ -74,9 +74,6 @@ function fetchLeadIQData(firstName, lastName, email) {
         }
     };
 
-    logMessage("Making API request...");
-
-    // Fetch API with POST method
     fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -88,24 +85,27 @@ function fetchLeadIQData(firstName, lastName, email) {
     .then(response => {
         if (!response.ok) {
             return response.json().then(error => {
-                logMessage(`API Error: ${response.status}. ${JSON.stringify(error)}`, true);
-                throw new Error(`HTTP error! status: ${response.status}`);
+                logMessage(`API Error: ${response.status}. Details: ${JSON.stringify(error)}`, true);
+                throw new Error(`HTTP error! status: ${response.status}, details: ${JSON.stringify(error)}`);
             });
         }
+        logMessage("API response received. Processing results...");
         return response.json();
     })
     .then(data => {
-        logMessage("API response received. Processing results...");
+        logMessage("API response processed.");
         displayResults(data);
     })
     .catch(error => {
-        logMessage(`Error during API call: ${error.message}`, true);
+        console.error('Error fetching data:', error);
+        logMessage(`Error fetching data: ${error.message}`, true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">Error fetching data: ${error.message}</p>`;
     });
 }
 
-// Function to display the API results on the form
 function displayResults(data) {
+    logMessage("Displaying results...");
+
     if (data && data.data && data.data.searchPeople && data.data.searchPeople.results.length > 0) {
         const person = data.data.searchPeople.results[0];
         const position = person.currentPositions && person.currentPositions.length > 0 ? person.currentPositions[0] : {};
@@ -128,15 +128,15 @@ function displayResults(data) {
 
         logMessage("Results displayed successfully.");
     } else {
-        logMessage("No matching results found.", true);
+        logMessage("No results found or incomplete response.", true);
         document.querySelector('.results').innerHTML = `<p style="color:red;">No match found or incomplete response.</p>`;
     }
 }
 
-// Helper function to log messages in the log-container
+// Function to log messages in the log container
 function logMessage(message, isError = false) {
     const logContainer = document.getElementById('log-messages');
-    const logEntry = document.createElement('div');
+    const logEntry = document.createElement('li');
     logEntry.textContent = message;
     logEntry.style.color = isError ? 'red' : 'black';
     logContainer.appendChild(logEntry);
