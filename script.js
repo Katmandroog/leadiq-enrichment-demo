@@ -111,7 +111,7 @@ function displayResults(data) {
         const email = position.emails && position.emails.length > 0 ? position.emails[0].value : 'N/A';
         const phone = position.phones && position.phones.length > 0 ? position.phones[0].value : 'N/A';
         const profile = person.profiles && person.profiles.length > 0 ? person.profiles[0].url : 'N/A';
-        const education = person.education && person.education.length > 0 ? person.education[0].name : 'N/A';
+        const education = person.education && person.education.length > 0 ? person.education.map(ed => ed.name).join(', ') : 'N/A';
         const industry = position.companyInfo && position.companyInfo.industry ? position.companyInfo.industry : 'N/A';
         const linkedinUrl = position.companyInfo && position.companyInfo.linkedinUrl ? position.companyInfo.linkedinUrl : 'N/A';
 
